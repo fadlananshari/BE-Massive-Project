@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2023 at 02:35 PM
+-- Generation Time: Dec 10, 2023 at 11:53 AM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- PHP Version: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,17 +24,171 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `perusahaan`
+-- Table structure for table `jurusans`
 --
 
-CREATE TABLE `perusahaan` (
+CREATE TABLE `jurusans` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
+  `nama_jurusan` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `jurusans`
+--
+
+INSERT INTO `jurusans` (`id`, `nama_jurusan`, `createdAt`, `updatedAt`) VALUES
+(1, 'Perhotelan', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
+(2, 'Perkantoran', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
+(3, 'Teknik Komputer dan Jaringan', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
+(4, 'Teknik Sepeda Motor', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
+(5, 'Farmasi', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
+(6, 'Akuntansi', '2023-12-10 10:52:47', '2023-12-10 10:52:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laporanakhirs`
+--
+
+CREATE TABLE `laporanakhirs` (
+  `id` int(11) NOT NULL,
+  `tanggal_a` datetime DEFAULT NULL,
+  `file_laporan` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `status_id` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laporanharians`
+--
+
+CREATE TABLE `laporanharians` (
+  `id` int(11) NOT NULL,
+  `tanggal_h` datetime DEFAULT NULL,
+  `foto_kegiatan_h` varchar(255) DEFAULT NULL,
+  `aktifitas_h` text DEFAULT NULL,
+  `absen_h` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `status_id` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laporanmingguans`
+--
+
+CREATE TABLE `laporanmingguans` (
+  `id` int(11) NOT NULL,
+  `tanggal_m` datetime DEFAULT NULL,
+  `aktifitas_m` text DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `status_id` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pendaftaranpkls`
+--
+
+CREATE TABLE `pendaftaranpkls` (
+  `id` int(11) NOT NULL,
+  `status_id` int(11) DEFAULT NULL,
+  `pkl_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `perusahaans`
+--
+
+CREATE TABLE `perusahaans` (
+  `id` int(11) NOT NULL,
+  `nama_perusahaan` varchar(255) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `no_hp` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pkls`
+--
+
+CREATE TABLE `pkls` (
+  `id` int(11) NOT NULL,
+  `syarat_pkl` text DEFAULT NULL,
+  `jurusan_id` int(11) DEFAULT NULL,
+  `perusahaan_id` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sequelizemeta`
+--
+
+CREATE TABLE `sequelizemeta` (
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `sequelizemeta`
+--
+
+INSERT INTO `sequelizemeta` (`name`) VALUES
+('20231207063218-create-status.js'),
+('20231207063329-create-jurusan.js'),
+('20231207063600-create-perusahaan.js'),
+('20231207063751-create-user.js'),
+('20231207064705-create-pkl.js'),
+('20231207071710-create-pendaftaran-pkl.js'),
+('20231207072157-create-laporan-harian.js'),
+('20231207072341-create-laporan-mingguan.js'),
+('20231207072829-create-laporan-akhir.js');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `statuses`
+--
+
+CREATE TABLE `statuses` (
+  `id` int(11) NOT NULL,
+  `nama_status` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `statuses`
+--
+
+INSERT INTO `statuses` (`id`, `nama_status`, `createdAt`, `updatedAt`) VALUES
+(1, 'Menunggu', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
+(2, 'Diterima', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
+(3, 'Ditolak', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
+(4, 'Selesai', '2023-12-10 10:52:47', '2023-12-10 10:52:47');
 
 -- --------------------------------------------------------
 
@@ -44,59 +198,191 @@ CREATE TABLE `perusahaan` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `nisn` int(11) NOT NULL,
-  `password` varchar(225) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `TTL` varchar(255) DEFAULT NULL,
+  `nisn` varchar(255) DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `gender` varchar(255) DEFAULT NULL,
-  `id_class` varchar(50) DEFAULT NULL,
-  `id_document` int(11) DEFAULT NULL,
-  `id_kegiatan` int(11) DEFAULT NULL,
+  `jenis_kelamin` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `nisn`, `password`, `name`, `TTL`, `email`, `gender`, `id_class`, `id_document`, `id_kegiatan`, `createdAt`, `updatedAt`) VALUES
-(1, 1152100028, 'passwordBaru', 'Muhamad Fadlan Anshari', 'Tangerang, 20 Januari 2002', 'fadlananshari06@gmail.com', 'Male', NULL, NULL, NULL, '2023-11-06 14:53:59', '2023-12-01 13:31:39'),
-(2, 1152100020, 'password', 'Muhamad Gilang', 'Jakarta, 30 September 2001', 'gilang@gmail.com', 'Male', NULL, NULL, NULL, '2023-11-06 14:55:50', '2023-11-06 14:56:09'),
-(3, 1152100029, 'password', 'Putri', 'Bandung, 13 April 2003', 'putri@gmail.com', 'Female', NULL, NULL, NULL, '2023-11-28 09:10:55', '2023-11-28 09:10:55');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `perusahaan`
+-- Indexes for table `jurusans`
 --
-ALTER TABLE `perusahaan`
+ALTER TABLE `jurusans`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `laporanakhirs`
+--
+ALTER TABLE `laporanakhirs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `laporanharians`
+--
+ALTER TABLE `laporanharians`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `laporanmingguans`
+--
+ALTER TABLE `laporanmingguans`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Indexes for table `pendaftaranpkls`
+--
+ALTER TABLE `pendaftaranpkls`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `status_id` (`status_id`),
+  ADD KEY `pkl_id` (`pkl_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `perusahaans`
+--
+ALTER TABLE `perusahaans`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `pkls`
+--
+ALTER TABLE `pkls`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `jurusan_id` (`jurusan_id`),
+  ADD KEY `perusahaan_id` (`perusahaan_id`);
+
+--
+-- Indexes for table `sequelizemeta`
+--
+ALTER TABLE `sequelizemeta`
+  ADD PRIMARY KEY (`name`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `statuses`
+--
+ALTER TABLE `statuses`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nisn` (`nisn`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `perusahaan`
+-- AUTO_INCREMENT for table `jurusans`
 --
-ALTER TABLE `perusahaan`
+ALTER TABLE `jurusans`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `laporanakhirs`
+--
+ALTER TABLE `laporanakhirs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `laporanharians`
+--
+ALTER TABLE `laporanharians`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `laporanmingguans`
+--
+ALTER TABLE `laporanmingguans`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pendaftaranpkls`
+--
+ALTER TABLE `pendaftaranpkls`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `perusahaans`
+--
+ALTER TABLE `perusahaans`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pkls`
+--
+ALTER TABLE `pkls`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `statuses`
+--
+ALTER TABLE `statuses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12349;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `laporanakhirs`
+--
+ALTER TABLE `laporanakhirs`
+  ADD CONSTRAINT `laporanakhirs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `laporanakhirs_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `laporanharians`
+--
+ALTER TABLE `laporanharians`
+  ADD CONSTRAINT `laporanharians_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `laporanharians_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `laporanmingguans`
+--
+ALTER TABLE `laporanmingguans`
+  ADD CONSTRAINT `laporanmingguans_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `laporanmingguans_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pendaftaranpkls`
+--
+ALTER TABLE `pendaftaranpkls`
+  ADD CONSTRAINT `pendaftaranpkls_ibfk_1` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pendaftaranpkls_ibfk_2` FOREIGN KEY (`pkl_id`) REFERENCES `pkls` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pendaftaranpkls_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pkls`
+--
+ALTER TABLE `pkls`
+  ADD CONSTRAINT `pkls_ibfk_1` FOREIGN KEY (`jurusan_id`) REFERENCES `jurusans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pkls_ibfk_2` FOREIGN KEY (`perusahaan_id`) REFERENCES `perusahaans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

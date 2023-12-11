@@ -1,11 +1,18 @@
 import express from 'express';
 import cors from 'cors';
-import userRoute from './routes/userRoutes.js';
+import routes from './routes/index.js';
+import bodyParser from 'body-parser';
+import { createServer } from 'http';
+import logRequest from './middleware/logs.js';
+
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(userRoute);
-
 const PORT = 4000;
-app.listen(PORT, () => console.log(`Server berhasil dirunning di port http://localhost:${PORT}`));
+const server = createServer(app)
+
+app.use(logRequest)
+app.use(cors());
+app.use(bodyParser.json());
+app.use(routes);
+
+server.listen(PORT, () => console.log(`Server berhasil dirunning di http://localhost:${PORT}`));

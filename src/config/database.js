@@ -1,8 +1,23 @@
-import {Sequelize} from "sequelize";
+import mysql from 'mysql2/promise';
 
-const db = new Sequelize('pklsmkn3bangkalan','root','',{
+const database = {
+  db: mysql.createPool({
     host: 'localhost',
-    dialect: 'mysql'
-});
+    user: 'root',
+    database: 'pklsmkn3bangkalan',
+    password: '', //!sdw%2sdscas.`
+    connectionLimit: 10,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0,
+  }),
 
-export default db;
+  query: async (query, value) => {
+    try {
+      const [executeQuery] = await database.db.query(query, value ?? []); // hasil dari query
+      return executeQuery;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+};
+export default database;
