@@ -37,8 +37,7 @@ const userController = {
   },
 
   createNewUser: async (req, res) => {
-    const { nisn, nama, password, email, jenis_kelamin } = req.body;
-
+    const { nisn, nama, password, email, alamat, jenis_kelamin } = req.body;
     if (nisn === undefined || nisn === '' || nama === undefined || nama === '' || password === undefined || password === '' || email === undefined || email === '' || jenis_kelamin === undefined || jenis_kelamin === '')
       return res.status(400).json('Invalid data!');
 
@@ -55,11 +54,11 @@ const userController = {
       const salt = await bcryptjs.genSalt(12);
       const hash = await bcryptjs.hash(password, salt);
 
-      await userModel.createNewUser({ nisn: nisn, nama: nama, password: hash, email: email, jenis_kelamin: jenis_kelamin });
+      await userModel.createNewUser({ nisn: nisn, nama: nama, password: hash, email: email, jenis_kelamin: jenis_kelamin, alamat:alamat });
 
       res.json({
         message: 'CREATE new user success',
-        data: { nisn: nisn, nama: nama, password: hash, email: email, jenis_kelamin: jenis_kelamin },
+        data: { nisn: nisn, nama: nama, password: hash, email: email, jenis_kelamin: jenis_kelamin, alamat:alamat },
       });
     } catch (error) {
       res.status(500).json({
@@ -68,7 +67,6 @@ const userController = {
       });
     }
   },
-
 
   // UPDATE - PATCH
   updateUser: async (req, res) => {

@@ -1,6 +1,6 @@
 import database from '../config/database.js';
 import bcryptjs from 'bcryptjs';
-import generateJwtToken from './generateJwtToken.js';
+import jwtToken from './jwtToken.js';
 
 const auth = {
   loginUser: async (req, res) => {
@@ -25,7 +25,7 @@ const auth = {
       const passwordMatch = await bcryptjs.compare(password, user[0].password);
 
       if (passwordMatch) {
-        const token = generateJwtToken(user[0].id);
+        const token = jwtToken.generateJwtToken(user[0].id);
 
         return res.status(200).json({ token, message: 'Login success!' });
       } else {
@@ -37,6 +37,18 @@ const auth = {
     }
   },
 
+  decodeToken: async (req, res) => {
+    const { token } = req.params;
+    try {
+      const decodedToken = jwtToken.decodeJwtToken(token);
+      res.json({
+        message: 'DECODE TOKEN success',
+        data: decodedToken,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export default auth;

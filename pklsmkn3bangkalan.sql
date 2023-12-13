@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2023 at 11:53 AM
+-- Generation Time: Dec 13, 2023 at 09:31 AM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.1.17
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -80,6 +80,14 @@ CREATE TABLE `laporanharians` (
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data for table `laporanharians`
+--
+
+INSERT INTO `laporanharians` (`id`, `tanggal_h`, `foto_kegiatan_h`, `aktifitas_h`, `absen_h`, `user_id`, `status_id`, `createdAt`, `updatedAt`) VALUES
+(1, '2023-11-13 23:20:52', NULL, 'Mempelajari mengenai apa itu UI/UX secara lebih detail, memberikan pengertian mengenai macam-macam framework, dan memberikan bagaimana cara untuk melakukan research orginizer agar produk layanan yang kita buat tepat sasaran dan mudah digunakan oleh user.', 'Hadir', 6, 2, '2023-12-12 17:20:52', '2023-12-12 17:20:52'),
+(14, '2023-11-14 00:00:00', NULL, 'saya belajar HTML dan CSS', 'Hadir', 8, 1, '2023-12-13 15:12:27', '2023-12-13 15:12:27');
+
 -- --------------------------------------------------------
 
 --
@@ -127,6 +135,14 @@ CREATE TABLE `perusahaans` (
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data for table `perusahaans`
+--
+
+INSERT INTO `perusahaans` (`id`, `nama_perusahaan`, `alamat`, `email`, `no_hp`, `createdAt`, `updatedAt`) VALUES
+(1, 'PT Modern Pulsa Investama', 'Ruko Khayangan Residence Blok R.A 11 Lt. 2', NULL, NULL, '2023-12-10 12:45:52', '2023-12-10 12:45:52'),
+(2, 'Dinas Pendidikan Kabupaten Bangkalan', 'Jl. Soekarno Hatta No. 23 Kabupaten Bangkalan', NULL, NULL, '2023-12-10 12:53:43', '2023-12-10 12:53:43');
+
 -- --------------------------------------------------------
 
 --
@@ -141,6 +157,14 @@ CREATE TABLE `pkls` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `pkls`
+--
+
+INSERT INTO `pkls` (`id`, `syarat_pkl`, `jurusan_id`, `perusahaan_id`, `createdAt`, `updatedAt`) VALUES
+(1, 'Belum ada syarat', 2, 1, '2023-12-10 12:49:17', '2023-12-10 12:49:17'),
+(2, 'Belum ada syarat', 2, 2, '2023-12-10 12:55:14', '2023-12-10 12:55:14');
 
 -- --------------------------------------------------------
 
@@ -203,9 +227,19 @@ CREATE TABLE `users` (
   `password` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `jenis_kelamin` varchar(255) DEFAULT NULL,
+  `alamat` varchar(255) NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `nisn`, `nama`, `password`, `email`, `jenis_kelamin`, `alamat`, `createdAt`, `updatedAt`) VALUES
+(6, '1152100046', 'Nanik Widayanti', '$2a$12$hkDtAii23YnFjR0YK7M8WezUuNa0i2pN0uVnEQUWQ0k/W1tFuAbgC', 'nanikwidayanti@gmail.com', 'Laki-laki', 'Bangkalan, Jawa Timur', '2023-12-11 11:59:21', '2023-12-13 13:58:03'),
+(8, '1152100020', 'Fuadi Anwar m', '$2a$12$5/Lev7u4MXmfaEmrxuQNm.ZxofG8AakZ.whWLaPqWyEV7HrJUB4a6', 'fuadiii044@gmail.com', 'Laki-laki', 'Bangkalan, Jawa Timur', '2023-12-13 14:38:42', '2023-12-13 14:38:42'),
+(9, '1152100023', 'Fuadi Anwar', '$2a$12$4qjPQUAMa3MZ81kVAquL.eXbjTBv5163ervDZB0gEDLYeP5X9QXdW', 'fuadiii04@gmail.com', 'Laki-laki', 'Bangkalan, Jawa Timur', '2023-12-13 15:27:46', '2023-12-13 15:27:46');
 
 --
 -- Indexes for dumped tables
@@ -306,7 +340,7 @@ ALTER TABLE `laporanakhirs`
 -- AUTO_INCREMENT for table `laporanharians`
 --
 ALTER TABLE `laporanharians`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `laporanmingguans`
@@ -324,13 +358,13 @@ ALTER TABLE `pendaftaranpkls`
 -- AUTO_INCREMENT for table `perusahaans`
 --
 ALTER TABLE `perusahaans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pkls`
 --
 ALTER TABLE `pkls`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `statuses`
@@ -342,7 +376,7 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
