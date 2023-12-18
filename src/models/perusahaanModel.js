@@ -1,8 +1,8 @@
-import database from '../config/database.js';
+import database from "../config/database.js";
 
 const perusahaanModel = {
   getAllPerusahaan: () => {
-    const SQLQuery = 'SELECT * from perusahaans';
+    const SQLQuery = "SELECT * from perusahaans";
 
     return database.db.execute(SQLQuery);
   },
@@ -25,15 +25,31 @@ const perusahaanModel = {
   },
 
   createNewPerusahaan: (body) => {
-    const SQLQuery = `INSERT INTO perusahaans (nama_perusahaan, alamat, email, no_hp, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)`;
-    const values = [body.nama_perusahaan, body.alamat, body.email, body.no_hp, new Date(), new Date()];
+    const SQLQuery = `INSERT INTO perusahaans (nama_perusahaan, kabupaten, alamat_lengkap, email, no_hp, jurusan_id, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    const values = [
+      body.nama_perusahaan,
+      body.kabupaten,
+      body.alamat_lengkap,
+      body.email,
+      body.no_hp,
+      body.jurusan_id,
+      new Date(),
+      new Date(),
+    ];
 
     return database.db.execute(SQLQuery, values);
   },
 
   updatePerusahaan: (body, id) => {
     const SQLQuery = `UPDATE perusahaans SET nama_perusahaan=?, alamat=?, email=?, no_hp=?, updatedAt=? WHERE id=?`;
-    const values = [body.nama_perusahaan, body.alamat, body.email, body.no_hp, new Date(), id];
+    const values = [
+      body.nama_perusahaan,
+      body.alamat,
+      body.email,
+      body.no_hp,
+      new Date(),
+      id,
+    ];
 
     return database.db.execute(SQLQuery, values);
   },

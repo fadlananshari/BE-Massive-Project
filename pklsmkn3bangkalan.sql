@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2023 at 09:31 AM
+-- Generation Time: Dec 18, 2023 at 10:49 AM
 -- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- PHP Version: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `jurusans` (
   `id` int(11) NOT NULL,
   `nama_jurusan` varchar(255) DEFAULT NULL,
+  `gambar_jurusan` text DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -38,13 +39,13 @@ CREATE TABLE `jurusans` (
 -- Dumping data for table `jurusans`
 --
 
-INSERT INTO `jurusans` (`id`, `nama_jurusan`, `createdAt`, `updatedAt`) VALUES
-(1, 'Perhotelan', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
-(2, 'Perkantoran', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
-(3, 'Teknik Komputer dan Jaringan', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
-(4, 'Teknik Sepeda Motor', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
-(5, 'Farmasi', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
-(6, 'Akuntansi', '2023-12-10 10:52:47', '2023-12-10 10:52:47');
+INSERT INTO `jurusans` (`id`, `nama_jurusan`, `gambar_jurusan`, `createdAt`, `updatedAt`) VALUES
+(1, 'Perhotelan', 'https://i.imgur.com/LMiS3vC.png', '2023-12-17 07:52:15', '2023-12-17 07:52:15'),
+(2, 'Perkantoran', 'https://i.imgur.com/6XnBJeg.png', '2023-12-17 07:52:15', '2023-12-17 07:52:15'),
+(3, 'Teknik Komputer dan Jaringan', 'https://i.imgur.com/cR4omB4.png', '2023-12-17 07:52:15', '2023-12-17 07:52:15'),
+(4, 'Teknik Sepeda Motor', 'https://i.imgur.com/inl3V64.png', '2023-12-17 07:52:15', '2023-12-17 07:52:15'),
+(5, 'Farmasi', 'https://i.imgur.com/iceggyO.png', '2023-12-17 07:52:15', '2023-12-17 07:52:15'),
+(6, 'Akuntansi', 'https://i.imgur.com/quBDDyg.png', '2023-12-17 07:52:15', '2023-12-17 07:52:15');
 
 -- --------------------------------------------------------
 
@@ -79,14 +80,6 @@ CREATE TABLE `laporanharians` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `laporanharians`
---
-
-INSERT INTO `laporanharians` (`id`, `tanggal_h`, `foto_kegiatan_h`, `aktifitas_h`, `absen_h`, `user_id`, `status_id`, `createdAt`, `updatedAt`) VALUES
-(1, '2023-11-13 23:20:52', NULL, 'Mempelajari mengenai apa itu UI/UX secara lebih detail, memberikan pengertian mengenai macam-macam framework, dan memberikan bagaimana cara untuk melakukan research orginizer agar produk layanan yang kita buat tepat sasaran dan mudah digunakan oleh user.', 'Hadir', 6, 2, '2023-12-12 17:20:52', '2023-12-12 17:20:52'),
-(14, '2023-11-14 00:00:00', NULL, 'saya belajar HTML dan CSS', 'Hadir', 8, 1, '2023-12-13 15:12:27', '2023-12-13 15:12:27');
 
 -- --------------------------------------------------------
 
@@ -128,9 +121,11 @@ CREATE TABLE `pendaftaranpkls` (
 CREATE TABLE `perusahaans` (
   `id` int(11) NOT NULL,
   `nama_perusahaan` varchar(255) DEFAULT NULL,
-  `alamat` varchar(255) DEFAULT NULL,
+  `kabupaten` varchar(255) DEFAULT NULL,
+  `alamat_lengkap` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `no_hp` varchar(255) DEFAULT NULL,
+  `jurusan_id` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -139,9 +134,8 @@ CREATE TABLE `perusahaans` (
 -- Dumping data for table `perusahaans`
 --
 
-INSERT INTO `perusahaans` (`id`, `nama_perusahaan`, `alamat`, `email`, `no_hp`, `createdAt`, `updatedAt`) VALUES
-(1, 'PT Modern Pulsa Investama', 'Ruko Khayangan Residence Blok R.A 11 Lt. 2', NULL, NULL, '2023-12-10 12:45:52', '2023-12-10 12:45:52'),
-(2, 'Dinas Pendidikan Kabupaten Bangkalan', 'Jl. Soekarno Hatta No. 23 Kabupaten Bangkalan', NULL, NULL, '2023-12-10 12:53:43', '2023-12-10 12:53:43');
+INSERT INTO `perusahaans` (`id`, `nama_perusahaan`, `kabupaten`, `alamat_lengkap`, `email`, `no_hp`, `jurusan_id`, `createdAt`, `updatedAt`) VALUES
+(1, 'PT Modern Pulsa Investama', 'Bengkalan', 'Jl. Soekarno Hatta No. 23', 'modern@gmail.com', '0899989989', 3, '2023-12-17 14:55:21', '2023-12-17 14:55:21');
 
 -- --------------------------------------------------------
 
@@ -151,20 +145,14 @@ INSERT INTO `perusahaans` (`id`, `nama_perusahaan`, `alamat`, `email`, `no_hp`, 
 
 CREATE TABLE `pkls` (
   `id` int(11) NOT NULL,
+  `bidang_pkl` varchar(255) DEFAULT NULL,
   `syarat_pkl` text DEFAULT NULL,
-  `jurusan_id` int(11) DEFAULT NULL,
+  `tgl_mulai` datetime DEFAULT NULL,
+  `tgl_selesai` datetime DEFAULT NULL,
   `perusahaan_id` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `pkls`
---
-
-INSERT INTO `pkls` (`id`, `syarat_pkl`, `jurusan_id`, `perusahaan_id`, `createdAt`, `updatedAt`) VALUES
-(1, 'Belum ada syarat', 2, 1, '2023-12-10 12:49:17', '2023-12-10 12:49:17'),
-(2, 'Belum ada syarat', 2, 2, '2023-12-10 12:55:14', '2023-12-10 12:55:14');
 
 -- --------------------------------------------------------
 
@@ -209,10 +197,10 @@ CREATE TABLE `statuses` (
 --
 
 INSERT INTO `statuses` (`id`, `nama_status`, `createdAt`, `updatedAt`) VALUES
-(1, 'Menunggu', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
-(2, 'Diterima', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
-(3, 'Ditolak', '2023-12-10 10:52:47', '2023-12-10 10:52:47'),
-(4, 'Selesai', '2023-12-10 10:52:47', '2023-12-10 10:52:47');
+(1, 'Menunggu', '2023-12-17 07:52:15', '2023-12-17 07:52:15'),
+(2, 'Diterima', '2023-12-17 07:52:15', '2023-12-17 07:52:15'),
+(3, 'Ditolak', '2023-12-17 07:52:15', '2023-12-17 07:52:15'),
+(4, 'Selesai', '2023-12-17 07:52:15', '2023-12-17 07:52:15');
 
 -- --------------------------------------------------------
 
@@ -227,7 +215,7 @@ CREATE TABLE `users` (
   `password` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `jenis_kelamin` varchar(255) DEFAULT NULL,
-  `alamat` varchar(255) NOT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -237,9 +225,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nisn`, `nama`, `password`, `email`, `jenis_kelamin`, `alamat`, `createdAt`, `updatedAt`) VALUES
-(6, '1152100046', 'Nanik Widayanti', '$2a$12$hkDtAii23YnFjR0YK7M8WezUuNa0i2pN0uVnEQUWQ0k/W1tFuAbgC', 'nanikwidayanti@gmail.com', 'Laki-laki', 'Bangkalan, Jawa Timur', '2023-12-11 11:59:21', '2023-12-13 13:58:03'),
-(8, '1152100020', 'Fuadi Anwar m', '$2a$12$5/Lev7u4MXmfaEmrxuQNm.ZxofG8AakZ.whWLaPqWyEV7HrJUB4a6', 'fuadiii044@gmail.com', 'Laki-laki', 'Bangkalan, Jawa Timur', '2023-12-13 14:38:42', '2023-12-13 14:38:42'),
-(9, '1152100023', 'Fuadi Anwar', '$2a$12$4qjPQUAMa3MZ81kVAquL.eXbjTBv5163ervDZB0gEDLYeP5X9QXdW', 'fuadiii04@gmail.com', 'Laki-laki', 'Bangkalan, Jawa Timur', '2023-12-13 15:27:46', '2023-12-13 15:27:46');
+(1, '123456', 'test', '$2a$12$gV3w1H1ckp6yLird1MatdurfYAu604LQ2Hy9YzJf738M6ROaVit6O', 'test@gmail.com', 'L', 'Bandung', '2023-12-17 15:21:57', '2023-12-17 15:21:57');
 
 --
 -- Indexes for dumped tables
@@ -289,14 +275,14 @@ ALTER TABLE `pendaftaranpkls`
 --
 ALTER TABLE `perusahaans`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `jurusan_id` (`jurusan_id`);
 
 --
 -- Indexes for table `pkls`
 --
 ALTER TABLE `pkls`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `jurusan_id` (`jurusan_id`),
   ADD KEY `perusahaan_id` (`perusahaan_id`);
 
 --
@@ -340,7 +326,7 @@ ALTER TABLE `laporanakhirs`
 -- AUTO_INCREMENT for table `laporanharians`
 --
 ALTER TABLE `laporanharians`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `laporanmingguans`
@@ -358,13 +344,13 @@ ALTER TABLE `pendaftaranpkls`
 -- AUTO_INCREMENT for table `perusahaans`
 --
 ALTER TABLE `perusahaans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pkls`
 --
 ALTER TABLE `pkls`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `statuses`
@@ -376,7 +362,7 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -412,11 +398,16 @@ ALTER TABLE `pendaftaranpkls`
   ADD CONSTRAINT `pendaftaranpkls_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `perusahaans`
+--
+ALTER TABLE `perusahaans`
+  ADD CONSTRAINT `perusahaans_ibfk_1` FOREIGN KEY (`jurusan_id`) REFERENCES `jurusans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `pkls`
 --
 ALTER TABLE `pkls`
-  ADD CONSTRAINT `pkls_ibfk_1` FOREIGN KEY (`jurusan_id`) REFERENCES `jurusans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `pkls_ibfk_2` FOREIGN KEY (`perusahaan_id`) REFERENCES `perusahaans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `pkls_ibfk_1` FOREIGN KEY (`perusahaan_id`) REFERENCES `perusahaans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
