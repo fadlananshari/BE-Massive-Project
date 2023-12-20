@@ -16,8 +16,8 @@ const perusahaanModel = {
   getPerusahaanByJurusan: (idJurusan) => {
     const SQLQuery = `SELECT *
     FROM perusahaans
-    JOIN pkls ON perusahaans.id = pkls.perusahaan_id
-    WHERE pkls.jurusan_id=?;
+    JOIN jurusans ON jurusans.id = perusahaans.jurusan_id
+    WHERE jurusans.id=?
     `;
     const values = [idJurusan];
 

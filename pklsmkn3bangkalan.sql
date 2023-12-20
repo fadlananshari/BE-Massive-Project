@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2023 at 10:49 AM
+-- Generation Time: Dec 20, 2023 at 10:25 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -105,6 +105,8 @@ CREATE TABLE `laporanmingguans` (
 
 CREATE TABLE `pendaftaranpkls` (
   `id` int(11) NOT NULL,
+  `tgl_daftar` date DEFAULT NULL,
+  `no_handphone` varchar(20) DEFAULT NULL,
   `status_id` int(11) DEFAULT NULL,
   `pkl_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -145,14 +147,24 @@ INSERT INTO `perusahaans` (`id`, `nama_perusahaan`, `kabupaten`, `alamat_lengkap
 
 CREATE TABLE `pkls` (
   `id` int(11) NOT NULL,
+  `kode_pkl` varchar(255) DEFAULT NULL,
   `bidang_pkl` varchar(255) DEFAULT NULL,
   `syarat_pkl` text DEFAULT NULL,
+  `gambar_pkl` text DEFAULT NULL,
   `tgl_mulai` datetime DEFAULT NULL,
   `tgl_selesai` datetime DEFAULT NULL,
   `perusahaan_id` int(11) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `pkls`
+--
+
+INSERT INTO `pkls` (`id`, `kode_pkl`, `bidang_pkl`, `syarat_pkl`, `gambar_pkl`, `tgl_mulai`, `tgl_selesai`, `perusahaan_id`, `createdAt`, `updatedAt`) VALUES
+(1, '19212', 'Service Komputer', 'Punya Leptop', 'https://i.imgur.com/5TDmncU.png', '2023-12-01 00:00:00', '2023-12-31 00:00:00', 1, '2023-12-18 20:44:33', '2023-12-18 20:44:33'),
+(2, '13323', 'Service Printer', 'Punya Printer', 'https://i.imgur.com/8SW1OZk.png', '2023-11-01 00:00:00', '2023-12-31 00:00:00', 1, '2023-12-18 20:57:25', '2023-12-18 20:57:25');
 
 -- --------------------------------------------------------
 
@@ -225,7 +237,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nisn`, `nama`, `password`, `email`, `jenis_kelamin`, `alamat`, `createdAt`, `updatedAt`) VALUES
-(1, '123456', 'test', '$2a$12$gV3w1H1ckp6yLird1MatdurfYAu604LQ2Hy9YzJf738M6ROaVit6O', 'test@gmail.com', 'L', 'Bandung', '2023-12-17 15:21:57', '2023-12-17 15:21:57');
+(1, '123456', 'test', '$2a$12$gV3w1H1ckp6yLird1MatdurfYAu604LQ2Hy9YzJf738M6ROaVit6O', 'test@gmail.com', 'Laki-laki', 'Bandung', '2023-12-17 15:21:57', '2023-12-17 15:21:57'),
+(2, '654321', 'Siti', '$2a$12$Fz7jOWp9TGk6w5NsfWqr5OAfgnKfEywflKZ9I8d2Wq6nn5R62KUke', 'siti@gmail.com', 'Perempuan', 'Jakarta', '2023-12-19 17:16:22', '2023-12-19 17:16:22');
 
 --
 -- Indexes for dumped tables
@@ -283,6 +296,7 @@ ALTER TABLE `perusahaans`
 --
 ALTER TABLE `pkls`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kode_pkl` (`kode_pkl`),
   ADD KEY `perusahaan_id` (`perusahaan_id`);
 
 --
@@ -350,7 +364,7 @@ ALTER TABLE `perusahaans`
 -- AUTO_INCREMENT for table `pkls`
 --
 ALTER TABLE `pkls`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `statuses`
@@ -362,7 +376,7 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
